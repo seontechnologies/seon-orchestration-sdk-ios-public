@@ -1,0 +1,159 @@
+name: Repository Dispatch Proxy
+
+on:
+  repository_dispatch:
+    types: [from_bitrise]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      DEFAULT_BRANCH: master
+
+      VERSION: ${{ github.event.client_payload.version }}
+      RELEASE_NOTES: ${{ github.event.client_payload.release_notes }}
+      RELEASE_NOTES_B64: ${{ github.event.client_payload.release_notes_b64 }}
+      ARTIFACTS_JSON: ${{ toJson(github.event.client_payload.artifacts) }}
+      CALLER: ${{ github.event.client_payload.caller }}
+
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Tool sanity
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift --version
+          gh --version || true
+
+      - name: Normalize release notes to file
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${RELEASE_NOTES_B64:-}" ]]; then
+            echo "$RELEASE_NOTES_B64" | base64 --decode > release_notes.txt
+          else
+            printf "%s" "${RELEASE_NOTES:-}" > release_notes.txt
+          fi
+          echo "Prepared release_notes.txt"
+
+      - name: Debug ARTIFACTS_JSON
+        run: echo "ARTIFACTS_JSON=${ARTIFACTS_JSON}"
+
+      - name: Extract artifact URLs from payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - "$ARTIFACTS_JSON" <<'PY'
+          import json, sys
+          arr = json.loads(sys.argv[1]) if sys.argv[1] else []
+          arr = arr or []
+          std = pod = None
+          for it in arr:
+            name = (it.get("name") or "").lower()
+            url  = it.get("url") or ""
+            if name.endswith("SEONOrchSDK_SPM.zip"):
+              std = url
+            if name.endswith("SEONOrchSDK_POD.zip"):
+              pod = url
+          if std:   print(f"STD_URL={std}")
+          if pod:   print(f"POD_URL={pod}")
+          PY
+          >>"$GITHUB_ENV"
+          echo "STD_URL=${STD_URL:-}"
+          echo "POD_URL=${POD_URL:-}"
+
+      - name: Download artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          curl -fL "${STD_URL}"    -o dist/SEONOrchSDK_SPM.zip
+          curl -fL "${POD_URL}"    -o dist/SEONOrchSDK_POD.zip
+          ls -lh dist
+
+      - name: Compute checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          CS_STD=$(swift package compute-checksum "dist/SEONOrchSDK_SPM.zip")
+          echo "CS_STD=$CS_STD" >> "$GITHUB_ENV"
+          echo "STD checksum: $CS_STD"
+
+      - name: Prepare git identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # ---------------- 1) Standard release: PR, tag, release ----------------
+      - name: Create documentation/{VERSION} branch, update files, open PR, tag & release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git checkout -B "documentation/${VERSION}" "origin/${DEFAULT_BRANCH}"
+
+          # Update Package.swift (URL -> v{VERSION}/SEONOrchSDK_SPM.zip, checksum -> CS_STD)
+          python3 - "$VERSION" "$CS_STD" <<'PY'
+          import sys, re, pathlib
+          version, checksum = sys.argv[1], sys.argv[2]
+          p = pathlib.Path("Package.swift")
+          s = p.read_text()
+          s = re.sub(r'url:\s*"(https://github\.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/)[^"]+"',
+                     rf'url: "\1v{version}/SEONOrchSDK_SPM.zip"', s)
+          s = re.sub(r'checksum:\s*"[0-9a-fA-F]+"',
+                     f'checksum: "{checksum}"', s)
+          p.write_text(s)
+          PY
+
+          # Insert release notes at top of # Changelog
+          python3 - "$VERSION" <<'PY'
+          import sys, pathlib, re
+          version = sys.argv[1]
+          notes = pathlib.Path("release_notes.txt").read_text()
+          readme = pathlib.Path("README.md")
+          t = readme.read_text()
+          m = re.search(r'(^#\s*Changelog\s*\n)', t, re.M)
+          if not m:
+            raise SystemExit("README.md must contain a '# Changelog' heading")
+          insert_at = m.end()
+          new_entry = f"\n## {version}\n{notes}\n\n"
+          t = t[:insert_at] + new_entry + t[insert_at:]
+          readme.write_text(t)
+          PY
+
+          git add Package.swift README.md
+          git commit -m "Release: v${VERSION}"
+          git push --set-upstream origin "documentation/${VERSION}"
+
+          # Open PR onto master
+          gh pr create \
+            --title "Release: v${VERSION}" \
+            --body-file release_notes.txt \
+            --base "${DEFAULT_BRANCH}" \
+            --head "documentation/${VERSION}" \
+            --draft=false
+
+          # Tag + create release (upload both artifacts)
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
+
+          gh release create "v${VERSION}" \
+            dist/SEONOrchSDK_SPM.zip \
+            dist/SEONOrchSDK_POD.zip \
+            --title "v${VERSION}" \
+            --notes-file release_notes.txt
