@@ -72,12 +72,13 @@ jobs:
           for it in arr:
             name = (it.get("name") or "").lower()
             url  = it.get("url") or ""
-            if name.endswith("SEONOrchSDK_SPM.zip"):
+            if name.endswith("seonorchsdk_spm.zip"):
               std = url
-            if name.endswith("SEONOrchSDK_POD.zip"):
+            if name.endswith("seonorchsdk_pod.zip"):
               pod = url
-          if std:   print(f"STD_URL={std}")
-          if pod:   print(f"POD_URL={pod}")
+          # Always print both variables, even if empty
+          print(f"STD_URL={std or ''}")
+          print(f"POD_URL={pod or ''}")
           PY
           >>"$GITHUB_ENV"
           echo "STD_URL=${STD_URL:-}"
