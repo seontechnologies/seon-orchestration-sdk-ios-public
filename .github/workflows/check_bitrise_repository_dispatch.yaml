@@ -19,13 +19,23 @@ jobs:
       RELEASE_NOTES_B64: ${{ github.event.client_payload.release_notes_b64 }}
       ARTIFACTS_JSON: ${{ toJson(github.event.client_payload.artifacts) }}
       CALLER: ${{ github.event.client_payload.caller }}
+      PINNED_COMMIT: ${{ github.event.client_payload.commit_sha }}
 
     steps:
-      - name: Checkout default branch
+      - name: Validate presence of PINNED_COMMIT
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${PINNED_COMMIT:-}" ]]; then
+            echo "❌ Error: commit_sha (PINNED_COMMIT) not provided in repository_dispatch payload."
+            exit 1
+          fi
+          echo "✅ Using pinned commit: $PINNED_COMMIT"
+      - name: Checkout pinned commit
         uses: actions/checkout@v4
         with:
-          ref: master
-          fetch-depth: 0
+          ref: ${{ env.PINNED_COMMIT }}
+          fetch-depth: 0  # Ensure full history for branching/tagging
 
       - name: Tool sanity
         shell: bash
@@ -97,15 +107,15 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      # ---------------- 1) Standard release: PR, tag, release ----------------
-      - name: Create documentation/{VERSION} branch, update files, open PR, tag & release
+      # ----------- Main Release Flow with commit pinning -----------
+      - name: Create branch from pinned commit and make release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
 
-          git checkout -B "documentation/${VERSION}" "origin/${DEFAULT_BRANCH}"
+          git checkout -B "documentation/${VERSION}" "${PINNED_COMMIT}"
 
           # Update Package.swift (URL -> v{VERSION}/SEONOrchSDK_SPM.zip, checksum -> CS_STD)
           python3 - "$VERSION" "$CS_STD" <<'PY'
