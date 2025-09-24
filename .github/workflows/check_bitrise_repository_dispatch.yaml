@@ -32,7 +32,7 @@ jobs:
           fi
           echo "✅ Using pinned commit: $PINNED_COMMIT"
       - name: Checkout pinned commit
-        uses: actions/checkout@4a4db38c6b86138f6c6d6d83f03f18c6e4c1f6f3
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
         with:
           ref: ${{ env.PINNED_COMMIT }}
           fetch-depth: 0  # Ensure full history for branching/tagging
