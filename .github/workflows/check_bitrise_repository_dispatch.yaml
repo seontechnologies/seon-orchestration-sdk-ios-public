@@ -64,7 +64,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 - "$ARTIFACTS_JSON" <<'PY'
+          # Capture Python output to both set current shell vars and write to GITHUB_ENV
+          eval "$(python3 - "$ARTIFACTS_JSON" <<'PY'
           import json, sys
           arr = json.loads(sys.argv[1]) if sys.argv[1] else []
           arr = arr or []
@@ -77,12 +78,16 @@ jobs:
             if name.endswith("seonorchsdk_pod.zip"):
               pod = url
           # Always print both variables, even if empty
-          print(f"STD_URL={std or ''}")
-          print(f"POD_URL={pod or ''}")
+          print(f"STD_URL='{std or ''}'")
+          print(f"POD_URL='{pod or ''}'")
           PY
-          >>"$GITHUB_ENV"
-          echo "STD_URL=${STD_URL:-}"
-          echo "POD_URL=${POD_URL:-}"
+          )"
+          # Write to GITHUB_ENV for next steps
+          echo "STD_URL=$STD_URL" >> "$GITHUB_ENV"
+          echo "POD_URL=$POD_URL" >> "$GITHUB_ENV"
+          # Debug output
+          echo "STD_URL=$STD_URL"
+          echo "POD_URL=$POD_URL"
 
       - name: Download artifacts
         shell: bash
