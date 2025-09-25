@@ -1,0 +1,175 @@
+name: Repository Dispatch Proxy
+
+on:
+  repository_dispatch:
+    types: [from_bitrise]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      DEFAULT_BRANCH: master
+
+      VERSION: ${{ github.event.client_payload.version }}
+      RELEASE_NOTES: ${{ github.event.client_payload.release_notes }}
+      RELEASE_NOTES_B64: ${{ github.event.client_payload.release_notes_b64 }}
+      ARTIFACTS_JSON: ${{ toJson(github.event.client_payload.artifacts) }}
+      CALLER: ${{ github.event.client_payload.caller }}
+      PINNED_COMMIT: ${{ github.event.client_payload.commit_sha }}
+
+    steps:
+      - name: Validate presence of PINNED_COMMIT
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${PINNED_COMMIT:-}" ]]; then
+            echo "❌ Error: commit_sha (PINNED_COMMIT) not provided in repository_dispatch payload."
+            exit 1
+          fi
+          echo "✅ Using pinned commit: $PINNED_COMMIT"
+      - name: Checkout pinned commit
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        with:
+          ref: ${{ env.PINNED_COMMIT }}
+          fetch-depth: 0  # Ensure full history for branching/tagging
+
+      - name: Tool sanity
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift --version
+          gh --version || true
+
+      - name: Normalize release notes to file
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [[ -n "${RELEASE_NOTES_B64:-}" ]]; then
+            echo "$RELEASE_NOTES_B64" | base64 --decode > release_notes.txt
+          else
+            printf "%s" "${RELEASE_NOTES:-}" > release_notes.txt
+          fi
+          echo "Prepared release_notes.txt"
+
+      - name: Debug ARTIFACTS_JSON
+        run: echo "ARTIFACTS_JSON=${ARTIFACTS_JSON}"
+
+      - name: Extract artifact URLs from payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Capture Python output to both set current shell vars and write to GITHUB_ENV
+          eval "$(python3 - "$ARTIFACTS_JSON" <<'PY'
+          import json, sys
+          arr = json.loads(sys.argv[1]) if sys.argv[1] else []
+          arr = arr or []
+          std = pod = None
+          for it in arr:
+            name = (it.get("name") or "").lower()
+            url  = it.get("url") or ""
+            if name.endswith("seonorchsdk_spm.zip"):
+              std = url
+            if name.endswith("seonorchsdk_pod.zip"):
+              pod = url
+          # Always print both variables, even if empty
+          print(f"STD_URL='{std or ''}'")
+          print(f"POD_URL='{pod or ''}'")
+          PY
+          )"
+          # Write to GITHUB_ENV for next steps
+          echo "STD_URL=$STD_URL" >> "$GITHUB_ENV"
+          echo "POD_URL=$POD_URL" >> "$GITHUB_ENV"
+          # Debug output
+          echo "STD_URL=$STD_URL"
+          echo "POD_URL=$POD_URL"
+
+      - name: Download artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          curl -fL "${STD_URL}"    -o dist/SEONOrchSDK_SPM.zip
+          curl -fL "${POD_URL}"    -o dist/SEONOrchSDK_POD.zip
+          ls -lh dist
+
+      - name: Compute checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          CS_STD=$(swift package compute-checksum "dist/SEONOrchSDK_SPM.zip")
+          echo "CS_STD=$CS_STD" >> "$GITHUB_ENV"
+          echo "STD checksum: $CS_STD"
+
+      - name: Prepare git identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      # ----------- Main Release Flow with commit pinning -----------
+      - name: Create branch from pinned commit and make release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git checkout -B "documentation/${VERSION}" "${PINNED_COMMIT}"
+
+          # Update Package.swift (URL -> v{VERSION}/SEONOrchSDK_SPM.zip, checksum -> CS_STD)
+          python3 - "$VERSION" "$CS_STD" <<'PY'
+          import sys, re, pathlib
+          version, checksum = sys.argv[1], sys.argv[2]
+          p = pathlib.Path("Package.swift")
+          s = p.read_text()
+          s = re.sub(r'url:\s*"(https://github\.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/)[^"]+"',
+                     rf'url: "\1v{version}/SEONOrchSDK_SPM.zip"', s)
+          s = re.sub(r'checksum:\s*"[0-9a-fA-F]+"',
+                     f'checksum: "{checksum}"', s)
+          p.write_text(s)
+          PY
+
+          # Insert release notes at top of # Changelog
+          python3 - "$VERSION" <<'PY'
+          import sys, pathlib, re
+          version = sys.argv[1]
+          notes = pathlib.Path("release_notes.txt").read_text()
+          readme = pathlib.Path("README.md")
+          t = readme.read_text()
+          m = re.search(r'(^#\s*Changelog\s*\n)', t, re.M)
+          if not m:
+            raise SystemExit("README.md must contain a '# Changelog' heading")
+          insert_at = m.end()
+          new_entry = f"\n## {version}\n{notes}\n\n"
+          t = t[:insert_at] + new_entry + t[insert_at:]
+          readme.write_text(t)
+          PY
+
+          git add Package.swift README.md
+          git commit -m "Release: v${VERSION}"
+          git push --set-upstream origin "documentation/${VERSION}"
+
+          # Open PR onto master
+          gh pr create \
+            --title "Release: v${VERSION}" \
+            --body-file release_notes.txt \
+            --base "${DEFAULT_BRANCH}" \
+            --head "documentation/${VERSION}" \
+            --draft=false
+
+          # Tag + create release (upload both artifacts)
+          git tag "v${VERSION}"
+          git push origin "v${VERSION}"
+
+          gh release create "v${VERSION}" \
+            dist/SEONOrchSDK_SPM.zip \
+            dist/SEONOrchSDK_POD.zip \
+            --title "v${VERSION}" \
+            --notes-file release_notes.txt
