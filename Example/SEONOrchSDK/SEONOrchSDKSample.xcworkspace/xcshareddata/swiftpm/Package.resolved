@@ -1,0 +1,42 @@
+{
+  "originHash" : "48ccadc6bc0bda2bc9ca83f0ca0efd5823fb37c201277377e6130f981c4da1e6",
+  "pins" : [
+    {
+      "identity" : "blinkid-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlinkID/blinkid-ios",
+      "state" : {
+        "revision" : "92343bbbcf29d065ce794de64033447d6991dcbd",
+        "version" : "6.13.0"
+      }
+    },
+    {
+      "identity" : "capture-core-sp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlinkID/capture-core-sp",
+      "state" : {
+        "revision" : "1bb2f89cc9ba283d4cd3536f1934d6277c89d6f6",
+        "version" : "1.4.3"
+      }
+    },
+    {
+      "identity" : "capture-ux-sp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlinkID/capture-ux-sp",
+      "state" : {
+        "revision" : "42b6c284b1d5a07b62d2441e9bf08b62040ff7c7",
+        "version" : "1.4.3"
+      }
+    },
+    {
+      "identity" : "seon-idv-sdk-ios-public",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/seontechnologies/seon-idv-sdk-ios-public",
+      "state" : {
+        "revision" : "83f8ae980645d34f7fe7182935ff750958c04588",
+        "version" : "2.0.3"
+      }
+    }
+  ],
+  "version" : 3
+}
