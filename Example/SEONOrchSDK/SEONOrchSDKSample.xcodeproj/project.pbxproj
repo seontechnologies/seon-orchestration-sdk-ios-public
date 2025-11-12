@@ -15,13 +15,13 @@
 /* Begin PBXFileReference section */
 		01D510F8E22215086011E24B /* Pods-IDVSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IDVSample.debug.xcconfig"; path = "Target Support Files/Pods-IDVSample/Pods-IDVSample.debug.xcconfig"; sourceTree = "<group>"; };
 		2519FEA7CBB9E135F32094D7 /* Pods-IDVSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IDVSample.release.xcconfig"; path = "Target Support Files/Pods-IDVSample/Pods-IDVSample.release.xcconfig"; sourceTree = "<group>"; };
-		497AEE2576930A0A2AB80453 /* Pods-SEONOrchSDKSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONOrchSDKSample.release.xcconfig"; path = "Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample.release.xcconfig"; sourceTree = "<group>"; };
+		27B28A57DBDED5AC426EB514 /* Pods-SEONOrchSDKSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONOrchSDKSample.debug.xcconfig"; path = "Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample.debug.xcconfig"; sourceTree = "<group>"; };
 		7111EE4F7656090F0318295B /* Pods-SEONIDV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONIDV.debug.xcconfig"; path = "Target Support Files/Pods-SEONIDV/Pods-SEONIDV.debug.xcconfig"; sourceTree = "<group>"; };
 		8427D50D39AE959517317A13 /* Pods-SEONIDV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONIDV.release.xcconfig"; path = "Target Support Files/Pods-SEONIDV/Pods-SEONIDV.release.xcconfig"; sourceTree = "<group>"; };
 		B02258D62EC1FF7C0056AB94 /* SEONOrchSDKSample-SPM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SEONOrchSDKSample-SPM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B02258D82EC1FF7D0056AB94 /* SEONOrchSDKSample copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SEONOrchSDKSample copy-Info.plist"; path = "/Users/abbas.sabetinezhad/Desktop/SEON/seon-orchestration-sdk-ios-public/Example/SEONOrchSDK/SEONOrchSDKSample copy-Info.plist"; sourceTree = "<absolute>"; };
 		B09860252D9D17F800D39D9D /* SEONOrchSDKSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SEONOrchSDKSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B93DB9D2F5634C7002A50D8C /* Pods-SEONOrchSDKSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONOrchSDKSample.debug.xcconfig"; path = "Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample.debug.xcconfig"; sourceTree = "<group>"; };
+		B1A597CA5DA566D478069558 /* Pods-SEONOrchSDKSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SEONOrchSDKSample.release.xcconfig"; path = "Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample.release.xcconfig"; sourceTree = "<group>"; };
 		ED7C76ACBCF48F58BD685232 /* Pods_SEONOrchSDKSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SEONOrchSDKSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,8 +90,8 @@
 				8427D50D39AE959517317A13 /* Pods-SEONIDV.release.xcconfig */,
 				01D510F8E22215086011E24B /* Pods-IDVSample.debug.xcconfig */,
 				2519FEA7CBB9E135F32094D7 /* Pods-IDVSample.release.xcconfig */,
-				B93DB9D2F5634C7002A50D8C /* Pods-SEONOrchSDKSample.debug.xcconfig */,
-				497AEE2576930A0A2AB80453 /* Pods-SEONOrchSDKSample.release.xcconfig */,
+				27B28A57DBDED5AC426EB514 /* Pods-SEONOrchSDKSample.debug.xcconfig */,
+				B1A597CA5DA566D478069558 /* Pods-SEONOrchSDKSample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -123,7 +123,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B02258D32EC1FF7C0056AB94 /* Build configuration list for PBXNativeTarget "SEONOrchSDKSample-SPM" */;
 			buildPhases = (
-				B02258CD2EC1FF7C0056AB94 /* [CP] Check Pods Manifest.lock */,
 				B02258CE2EC1FF7C0056AB94 /* Sources */,
 				B02258CF2EC1FF7C0056AB94 /* Frameworks */,
 				B02258D22EC1FF7C0056AB94 /* Resources */,
@@ -148,6 +147,8 @@
 				B09860212D9D17F800D39D9D /* Sources */,
 				B09860222D9D17F800D39D9D /* Frameworks */,
 				B09860232D9D17F800D39D9D /* Resources */,
+				39475C07FC70F511289F8E6D /* [CP] Embed Pods Frameworks */,
+				D78BBC0A933F2449CF5D652D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -217,26 +218,38 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B02258CD2EC1FF7C0056AB94 /* [CP] Check Pods Manifest.lock */ = {
+		39475C07FC70F511289F8E6D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SEONOrchSDKSample-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D78BBC0A933F2449CF5D652D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F111D6137AAED5DE84205220 /* [CP] Check Pods Manifest.lock */ = {
@@ -283,13 +296,14 @@
 /* Begin XCBuildConfiguration section */
 		B02258D42EC1FF7C0056AB94 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B93DB9D2F5634C7002A50D8C /* Pods-SEONOrchSDKSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H22T9J6ZS3;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = H22T9J6ZS3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
@@ -307,8 +321,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.seon.orch.sample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.seon.bundled.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Orch SDK";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -317,13 +333,14 @@
 		};
 		B02258D52EC1FF7C0056AB94 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 497AEE2576930A0A2AB80453 /* Pods-SEONOrchSDKSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H22T9J6ZS3;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = H22T9J6ZS3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
@@ -341,8 +358,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.seon.orch.sample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.seon.bundled.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Orch SDK";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -351,14 +370,16 @@
 		};
 		B09860392D9D17F900D39D9D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B93DB9D2F5634C7002A50D8C /* Pods-SEONOrchSDKSample.debug.xcconfig */;
+			baseConfigurationReference = 27B28A57DBDED5AC426EB514 /* Pods-SEONOrchSDKSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H22T9J6ZS3;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = H22T9J6ZS3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
@@ -376,9 +397,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.seon.orch.sample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.seon.bundled.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Orch SDK";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -387,14 +409,16 @@
 		};
 		B098603A2D9D17F900D39D9D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 497AEE2576930A0A2AB80453 /* Pods-SEONOrchSDKSample.release.xcconfig */;
+			baseConfigurationReference = B1A597CA5DA566D478069558 /* Pods-SEONOrchSDKSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = H22T9J6ZS3;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = H22T9J6ZS3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
@@ -412,9 +436,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = io.seon.orch.sample;
+				PRODUCT_BUNDLE_IDENTIFIER = io.seon.bundled.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Orch SDK";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
