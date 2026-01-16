@@ -1,3 +1,24 @@
-PODFILE CHECKSUM: b92067feb984d00e9adcead0959f055490f99529
+PODS:
+  - Resolver (1.5.1)
+  - SEONOrchSDK (0.1.0):
+    - Resolver (~> 1.5)
+    - SeonSDK (~> 5.6.1)
+  - SeonSDK (5.6.1)
+
+DEPENDENCIES:
+  - SEONOrchSDK (= 0.1.0)
+
+SPEC REPOS:
+  trunk:
+    - Resolver
+    - SEONOrchSDK
+    - SeonSDK
+
+SPEC CHECKSUMS:
+  Resolver: 0e2ce51257e9366c54afe1b9e9be25059e9b9300
+  SEONOrchSDK: bc4435a411ad124f408e8001e62e10ad2b125258
+  SeonSDK: 5d64b986f8cb53f2a8cafc7e54d8e578bf1da46a
+
+PODFILE CHECKSUM: 76dff587ddab5f15c13705589c5ac476cabd3931
 
 COCOAPODS: 1.16.2
