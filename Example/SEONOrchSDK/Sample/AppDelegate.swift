@@ -3,7 +3,7 @@
 //  SEONOrchSDKSample
 //
 //  Created by SEON Technologies Ltd. on 02.04.25.
-//  Copyright © 2025 SEON Technologies Ltd. All rights reserved.
+//  Copyright © 2026 SEON Technologies Ltd. All rights reserved.
 //
 
 import UIKit

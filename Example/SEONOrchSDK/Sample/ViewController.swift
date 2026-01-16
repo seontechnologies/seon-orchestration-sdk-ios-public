@@ -3,286 +3,149 @@
 //  SEONOrchSDKSample
 //
 //  Created by SEON Technologies Ltd. on 02.04.25.
-//  Copyright © 2025 SEON Technologies Ltd. All rights reserved.
+//  Copyright © 2026 SEON Technologies Ltd. All rights reserved.
 //
 
-import SEONIdVerification
+import SEONOrchSDK
 import UIKit
 
-class ViewController: UIViewController, UINavigationControllerDelegate {
-    private let licenseKeyTextField = UITextField()
-    private let baseUrlTextField = UITextField()
-    private let templateIdTextField = UITextField()
-    private let nameTextField = UITextField()
-    private let dateOfBirthField = UIDatePicker()
-    private let addressTextField = UITextField()
-    private let postalCodeTextField = UITextField()
-    private let countryTextField = UITextField()
-    private let flowResultLabel = FillLabel()
-    private let clearButton = UIButton()
-    private let dobMaskView = UIView()
-    private let contentView = UIStackView()
+class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
 
-    var hasDoB = false {
-        didSet {
-            dobMaskView.isHidden = hasDoB
-        }
-    }
+    // MARK: - ViewModel
+    private let viewModel = MainViewModel()
+    private let languageTextField = SampleAppTextField()
+    private let customizeThemeCheckmark = SEONCheckbox()
+    private let themeTextView = SampleAppTextView()
+    private let sessionTokenTextField = SampleAppTextField()
+    private let cmsApiKeyTextField = SampleAppTextField()
+    private let flowResultLabel = FillLabel()
+    private let navigateButton = UIButton(type: .system)
+
+    // Container views for animation
+    private let sessionTokenContainer = UIStackView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .gray
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.axis = .vertical
-        contentView.alignment = .fill
-        contentView.distribution = .fill
-        contentView.spacing = 8
-        scrollView.addSubview(contentView)
 
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor,
-                constant: 16
-            ),
-            scrollView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -16
-            ),
-            scrollView.leadingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-                constant: 16
-            ),
-            scrollView.trailingAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                constant: -16
-            ),
-            contentView.topAnchor.constraint(
-                equalTo: scrollView.topAnchor
-            ),
-            contentView.bottomAnchor.constraint(
-                equalTo: scrollView.bottomAnchor
-            ),
-            contentView.leadingAnchor.constraint(
-                equalTo: scrollView.leadingAnchor
-            ),
-            contentView.trailingAnchor.constraint(
-                equalTo: scrollView.trailingAnchor
-            ),
-            contentView.widthAnchor.constraint(
-                equalTo: scrollView.widthAnchor
-            )
-        ])
-
-        setUpTitleAndLicenseKeyField()
-        setUpBaseUrlField()
-        setUpTemplateField()
-        setUpNameField()
-        setUpDateOfBirthField()
-        setUpAddressField()
-        setUpPostalCodeField()
-        setUpCountryField()
+        setUpTitle()
+        setUpLanguageField()
+        setUpThemeTextView()
+        setUpSessionTokenContainer()
         setUpFlowTableTitleAndLabel()
         setUpNavigationButton()
-        contentView.setCustomSpacing(18, after: licenseKeyTextField)
-        contentView.setCustomSpacing(18, after: baseUrlTextField)
-        contentView.setCustomSpacing(18, after: nameTextField)
-        contentView.setCustomSpacing(18, after: addressTextField)
-        contentView.setCustomSpacing(18, after: postalCodeTextField)
-        contentView.setCustomSpacing(18, after: countryTextField)
+        applyPersistedSettings()
+
+        contentView.setCustomSpacing(18, after: languageTextField)
+        contentView.setCustomSpacing(18, after: themeTextView)
+        contentView.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(tappedBackgroundArea))
+        )
+        // Set up tap gesture to dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedBackgroundArea))
+        view.addGestureRecognizer(tapGesture)
     }
 
-    private func setUpTitleAndLicenseKeyField() {
+    @objc
+    private func tappedBackgroundArea() {
+        contentView.endEditing(true)
+    }
+
+    private func setUpTitle() {
         let titleLabel = FillLabel()
         titleLabel.text = "Test Application"
-
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(titleLabel)
 
-        let licenseKeyLabel = FillLabel()
-        licenseKeyLabel.text = "License key:"
-
-        licenseKeyLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(licenseKeyLabel)
-
-        licenseKeyTextField.text = "" // Please provide proper License here
-        licenseKeyTextField.backgroundColor = .systemGray6
-        licenseKeyTextField.delegate = self
-
-        licenseKeyTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(licenseKeyTextField)
-        NSLayoutConstraint.activate([
-            licenseKeyTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        initializeDefaultJSONs()
     }
 
-    private func setUpBaseUrlField() {
-        let baseUrlLabel = FillLabel()
-        baseUrlLabel.text = "Base url:"
-
-        baseUrlLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(baseUrlLabel)
-
-        baseUrlTextField.text = "https://idv-us.seon.io" // or "https://idv-eu.seon.io" depending on your preference on location
-        baseUrlTextField.backgroundColor = .systemGray6
-        baseUrlTextField.delegate = self
-        baseUrlTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(baseUrlTextField)
-        NSLayoutConstraint.activate([
-            baseUrlTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+    private func initializeDefaultJSONs() {
+        initializeThemeJSON()
     }
 
-    private func setUpTemplateField() {
-        let templateIdLabel = FillLabel()
-        templateIdLabel.text = "Template Id:"
-
-        templateIdLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(templateIdLabel)
-
-        templateIdTextField.backgroundColor = .systemGray6
-        templateIdTextField.delegate = self
-        templateIdTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(templateIdTextField)
-        NSLayoutConstraint.activate([
-            templateIdTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+    private func initializeThemeJSON() {
+        themeTextView.text = viewModel.getDefaultThemeJSON()
     }
 
-    private func setUpNameField() {
-        let nameLabel = FillLabel()
-        nameLabel.text = "Name:"
+    private func setUpLanguageField() {
+        let langLabel = FillLabel()
+        langLabel.text = "Language:"
+        langLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(langLabel)
 
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(nameLabel)
-        nameTextField.backgroundColor = .systemGray6
-        nameTextField.delegate = self
-
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(nameTextField)
-        NSLayoutConstraint.activate([
-            nameTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        languageTextField.backgroundColor = .systemGray6
+        languageTextField.delegate = self
+        languageTextField.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(languageTextField)
     }
 
-    private func setUpDateOfBirthField() {
-        let dobLabel = FillLabel()
-        dobLabel.text = "Date of Birth:"
+    private func setUpThemeTextView() {
+        let themeLabel = FillLabel()
+        themeLabel.text = "Theme:"
+        themeLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        dobLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(dobLabel)
+        themeTextView.isUserInteractionEnabled = false
+        themeTextView.backgroundColor = .systemGray2
+        themeTextView.delegate = self
 
-        let dobView = UIView()
-        dobView.translatesAutoresizingMaskIntoConstraints = false
-        dateOfBirthField.backgroundColor = .systemGray6
-        for subview in dateOfBirthField.subviews {
-            subview.backgroundColor = .systemGray6
-            for deeperSubview in subview.subviews {
-                deeperSubview.backgroundColor = .systemGray6
-                NSLayoutConstraint.activate([
-                    deeperSubview.widthAnchor.constraint(equalTo: dateOfBirthField.widthAnchor),
-                ])
-            }
+        contentView.addArrangedSubview(themeLabel)
+        contentView.addArrangedSubview(setupCustomizeThemeCheckmark())
+        contentView.addArrangedSubview(themeTextView)
+    }
+
+    private func setUpSessionTokenContainer() {
+
+        // Setup session token container (shown when unchecked)
+        setupSessionTokenContainer()
+        contentView.addArrangedSubview(sessionTokenContainer)
+        sessionTokenContainer.isHidden = false
+    }
+
+    private func setupCustomizeThemeCheckmark() -> UIView {
+        let emptySpacer = UIView()
+        emptySpacer.translatesAutoresizingMaskIntoConstraints = false
+        let themeLabel = UILabel()
+        themeLabel.translatesAutoresizingMaskIntoConstraints = false
+        themeLabel.text = "Customize Theme"
+
+        let checkbox = customizeThemeCheckmark
+        checkbox.translatesAutoresizingMaskIntoConstraints = false
+        checkbox.valueChangedHandler = { [weak self] (isChecked: Bool) in
+            self?.applyCustomizeTheme(isChecked: isChecked)
         }
-        dateOfBirthField.date = Date().addingTimeInterval((-365 * 20) * 86400)
-        dateOfBirthField.datePickerMode = .date
-        dateOfBirthField.contentHorizontalAlignment = .center
-        dateOfBirthField.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-        dateOfBirthField.translatesAutoresizingMaskIntoConstraints = false
-        dobView.addSubview(dateOfBirthField)
 
-        clearButton.translatesAutoresizingMaskIntoConstraints = false
-        clearButton.setTitle("Clear", for: .normal)
-        clearButton.titleLabel?.font = .systemFont(ofSize: 14)
-        clearButton.setTitleColor(nameTextField.textColor, for: .normal)
-        dobView.addSubview(clearButton)
-        clearButton.addTarget(self, action: #selector(clearButtonTapped), for: .touchUpInside)
+        emptySpacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        emptySpacer.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        dobMaskView.backgroundColor = .systemGray6
-        dobMaskView.translatesAutoresizingMaskIntoConstraints = false
-        dobMaskView.isUserInteractionEnabled = false
-        dobMaskView.alpha = 0.8
-        dobMaskView.isHidden = hasDoB
-        dobView.addSubview(dobMaskView)
-        NSLayoutConstraint.activate([
-            dateOfBirthField.topAnchor.constraint(equalTo: dobView.topAnchor),
-            dateOfBirthField.leadingAnchor.constraint(equalTo: dobView.leadingAnchor),
-            dateOfBirthField.trailingAnchor.constraint(equalTo: dobView.trailingAnchor),
-            dateOfBirthField.heightAnchor.constraint(equalToConstant: 40),
-            dobView.heightAnchor.constraint(equalToConstant: 40),
-            clearButton.centerYAnchor.constraint(equalTo: dateOfBirthField.centerYAnchor, constant: 0),
-            clearButton.trailingAnchor.constraint(equalTo: dateOfBirthField.trailingAnchor, constant: -12),
-            dobMaskView.leadingAnchor.constraint(equalTo: dateOfBirthField.leadingAnchor, constant: 0),
-            dobMaskView.trailingAnchor.constraint(equalTo: dateOfBirthField.trailingAnchor, constant: 0),
-            dobMaskView.topAnchor.constraint(equalTo: dateOfBirthField.topAnchor, constant: 0),
-            dobMaskView.bottomAnchor.constraint(equalTo: dateOfBirthField.bottomAnchor, constant: 0)
-        ])
-        contentView.addArrangedSubview(dobView)
-        contentView.setCustomSpacing(18, after: dobView)
+        let themeStackView = UIStackView(arrangedSubviews: [emptySpacer, checkbox, themeLabel])
+        themeStackView.axis = .horizontal
+        themeStackView.spacing = 6
+        themeStackView.alignment = .leading
+        themeStackView.distribution = .fill
+        themeStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(themeStackView)
+
+        return themeStackView
     }
 
-    @objc
-    private func clearButtonTapped() {
-        hasDoB = false
-        dateOfBirthField.date = Date().addingTimeInterval((-365 * 20) * 86400)
-    }
+    private func setupSessionTokenContainer() {
+        sessionTokenContainer.axis = .vertical
+        sessionTokenContainer.spacing = 8
+        sessionTokenContainer.translatesAutoresizingMaskIntoConstraints = false
 
-    @objc
-    private func datePickerValueChanged(_ sender: UIDatePicker) {
-        hasDoB = true
-    }
+        let sessionTokenLabel = FillLabel()
+        sessionTokenLabel.text = "Session Token:"
+        sessionTokenLabel.translatesAutoresizingMaskIntoConstraints = false
 
-    private func setUpAddressField() {
-        let addressLabel = FillLabel()
-        addressLabel.text = "Address:"
+        sessionTokenTextField.backgroundColor = .systemGray6
+        sessionTokenTextField.delegate = self
+        sessionTokenTextField.placeholder = "Paste JWT token here"
+        sessionTokenTextField.translatesAutoresizingMaskIntoConstraints = false
 
-        addressLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(addressLabel)
-
-        addressTextField.backgroundColor = .systemGray6
-        addressTextField.delegate = self
-
-        addressTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(addressTextField)
-        NSLayoutConstraint.activate([
-            addressTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
-    }
-
-    private func setUpPostalCodeField() {
-        let zipLabel = FillLabel()
-        zipLabel.text = "Postal Code:"
-
-        zipLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(zipLabel)
-
-        postalCodeTextField.backgroundColor = .systemGray6
-        postalCodeTextField.delegate = self
-
-        postalCodeTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(postalCodeTextField)
-        NSLayoutConstraint.activate([
-            postalCodeTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
-    }
-
-    private func setUpCountryField() {
-        let countryLabel = FillLabel()
-        countryLabel.text = "ISO Country Code:"
-        countryLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(countryLabel)
-
-        countryTextField.backgroundColor = .systemGray6
-        countryTextField.delegate = self
-
-        countryTextField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addArrangedSubview(countryTextField)
-        NSLayoutConstraint.activate([
-            countryTextField.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        sessionTokenContainer.addArrangedSubview(sessionTokenLabel)
+        sessionTokenContainer.addArrangedSubview(sessionTokenTextField)
     }
 
     private func setUpFlowTableTitleAndLabel() {
@@ -292,6 +155,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         flowResultTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(flowResultTitleLabel)
 
+        // Flow result label
         flowResultLabel.text = ""
         flowResultLabel.numberOfLines = 0
         flowResultLabel.textAlignment = .center
@@ -301,7 +165,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     private func setUpNavigationButton() {
-        let navigateButton = UIButton(type: .system)
         navigateButton.setTitle("Start Verification", for: .normal)
         navigateButton.backgroundColor = .red
         navigateButton.setTitleColor(.white, for: .normal)
@@ -311,8 +174,23 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         navigateButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addArrangedSubview(navigateButton)
         NSLayoutConstraint.activate([
-            navigateButton.heightAnchor.constraint(equalToConstant: 40),
+            navigateButton.heightAnchor.constraint(equalToConstant: 40)
         ])
+    }
+
+    private func applyPersistedSettings() {
+
+        languageTextField.text = "en"
+        themeTextView.text = viewModel.getDefaultThemeJSON()
+        sessionTokenTextField.text = "YOUR_SESSION_TOKEN"
+
+        customizeThemeCheckmark.isChecked = false
+        applyCustomizeTheme(isChecked: customizeThemeCheckmark.isChecked)
+    }
+
+    private func applyCustomizeTheme(isChecked: Bool) {
+        themeTextView.isUserInteractionEnabled = isChecked
+        themeTextView.backgroundColor = isChecked ? .systemGray6 : .systemGray2
     }
 
     @objc
@@ -322,106 +200,46 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         navController.delegate = self
         flowResultLabel.text = ""
 
-        var name: String?
-        if let nameText = nameTextField.text, !nameText.isEmpty {
-            name = nameText
+        // Get language from text field
+        var language: String?
+        if let languageText = languageTextField.text, !languageText.isEmpty {
+            language = languageText
         }
 
-        var address: String?
-        if let addressText = addressTextField.text, !addressText.isEmpty {
-            address = addressText
-        }
-        let dateOfBirth = {
-            let date = dateOfBirthField.date
-            if hasDoB {
-                return DateOfBirth(date: date)
-            }
-            return nil
-        }()
+        // Only pass theme if customize theme is enabled
+        let themeToUse = customizeThemeCheckmark.isChecked ? themeTextView.text : nil
 
-        let customerData = SEONCustomerData(
-            licenseKey: licenseKeyTextField.text ?? "",
-            referenceId: UUID().uuidString,
-            name: name,
-            countryISOCode: countryTextField.text,
-            address: address,
-            postalCode: postalCodeTextField.text,
-            dateOfBirth: dateOfBirth
+        // Use ViewModel to handle SDK initialization
+        viewModel.initializeSDK(
+            sessionToken: sessionTokenTextField.text,
+            language: language,
+            theme: themeToUse,
+            navigationController: navController,
+            delegate: self
         )
+    }
 
-        var templateId: String?
-        if let templateIdText = templateIdTextField.text, !templateIdText.isEmpty {
-            templateId = templateIdText
-        }
-
-        SEONIdVerificationService.shared.initialize(
-            baseUrl: baseUrlTextField.text ?? "",
-            customerData: customerData,
-            templateId: templateId
+    private func showError(_ value: String) {
+        let alert = UIAlertController(
+            title: "Initialization Failed",
+            message: value,
+            preferredStyle: .alert
         )
-
-        SEONIdVerificationService.shared.delegate = self
-        SEONIdVerificationService.shared.startIdVerificationFlow(navigationController: navController)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
     }
 }
 
-extension ViewController: SEONIdVerificationServiceDelegate {
-    func didFinishVerificationFlow(result: SEONIdVerification.SEONIdVerificationFlowResult) {
-        switch result {
-        case .completed:
-            flowResultLabel.textColor = .green
-            flowResultLabel.text = "Completed"
-        case .completedSuccess:
-            flowResultLabel.textColor = .green
-            flowResultLabel.text = "CompletedSuccess"
-        case .completedFailed:
-            flowResultLabel.textColor = .green
-            flowResultLabel.text = "CompletedFailed"
-        case .completedPending:
-            flowResultLabel.textColor = .green
-            flowResultLabel.text = "CompletedPending"
-        case .interruptedByUser:
-            flowResultLabel.textColor = .blue
-            flowResultLabel.text = "Interrupted by user"
-        case .error(let error):
-            flowResultLabel.textColor = .red
-            flowResultLabel.text = error
-        @unknown default:
-            flowResultLabel.textColor = .red
-            flowResultLabel.text = "Unknown Error"
-        }
+extension ViewController: SEONOrchSDKServiceDelegate {
+    func didFinishVerificationFlow(result: SEONOrchSDK.SEONOrchSDKFlowResult) {
+        flowResultLabel.textColor = result.getResultIndicationColor()
+        flowResultLabel.text = result.getResultIndicatorText()
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension ViewController: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-private extension DateOfBirth {
-    init? (date: Date) {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.day, .month, .year], from: date)
-        if let day = components.day, let month = components.month, let year = components.year {
-            self.init(day: day, month: month, year: year)
-        } else {
-            return nil
-        }
-    }
-}
-
-private class FillLabel: UILabel {
-    override init(frame: CGRect) {
-        super
-            .init(frame: frame)
-        setContentHuggingPriority(.defaultLow, for: .horizontal)
-        textAlignment = .center
-    }
-    
-    required init?(coder: NSCoder) {
-        super
-            .init(coder: coder)
     }
 }

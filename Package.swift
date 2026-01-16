@@ -11,17 +11,23 @@ let package = Package(
     products: [
         .library(
             name: "SEONOrchSDK",
-            targets: ["SEONOrchSDK"]
+            targets: ["SEONOrch"]
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/hmlongco/Resolver", from: "1.5.1")
+        .package(url: "https://github.com/hmlongco/Resolver", from: "1.5.1"),
+        .package(
+            url: "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
+            exact: "5.6.1"
+        )
     ],
     targets: [
         .target(
-            name: "SEONOrchSDK",
+            name: "SEONOrch",
             dependencies: [
                 .target(name: "SEONOrchSDK"),
+                .product(name: "SeonSDK", package: "seon-ios-sdk-swift-package"),
+                .product(name: "Resolver", package: "Resolver")
             ]
         ),
         .binaryTarget(
