@@ -1,40 +1,31 @@
 {
-  "originHash" : "48ccadc6bc0bda2bc9ca83f0ca0efd5823fb37c201277377e6130f981c4da1e6",
+  "originHash" : "7ab87ddac5345f5d6291016f8a49f526e085b726b449b616d104938b86a7ba7c",
   "pins" : [
     {
-      "identity" : "blinkid-ios",
+      "identity" : "resolver",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BlinkID/blinkid-ios",
+      "location" : "https://github.com/hmlongco/Resolver",
       "state" : {
-        "revision" : "92343bbbcf29d065ce794de64033447d6991dcbd",
-        "version" : "6.13.0"
+        "revision" : "47602af1ac8d7952299fbd0bda3cfbd12cf3a8ca",
+        "version" : "1.5.1"
       }
     },
     {
-      "identity" : "capture-core-sp",
+      "identity" : "seon-ios-sdk-swift-package",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BlinkID/capture-core-sp",
+      "location" : "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
       "state" : {
-        "revision" : "1bb2f89cc9ba283d4cd3536f1934d6277c89d6f6",
-        "version" : "1.4.3"
+        "revision" : "f6240372958bc94c05b1170eee790e878df51cea",
+        "version" : "5.6.1"
       }
     },
     {
-      "identity" : "capture-ux-sp",
+      "identity" : "seon-orchestration-sdk-ios-public",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BlinkID/capture-ux-sp",
+      "location" : "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public",
       "state" : {
-        "revision" : "42b6c284b1d5a07b62d2441e9bf08b62040ff7c7",
-        "version" : "1.4.3"
-      }
-    },
-    {
-      "identity" : "seon-idv-sdk-ios-public",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/seontechnologies/seon-idv-sdk-ios-public",
-      "state" : {
-        "revision" : "83f8ae980645d34f7fe7182935ff750958c04588",
-        "version" : "2.0.3"
+        "revision" : "792ab6f0dde80372cd23eb16673d2219b1cdb107",
+        "version" : "0.1.0"
       }
     }
   ],

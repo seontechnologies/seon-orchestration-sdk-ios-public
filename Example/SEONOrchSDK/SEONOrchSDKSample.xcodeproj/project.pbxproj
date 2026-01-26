@@ -634,8 +634,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
 			requirement = {
-				kind = revision;
-				revision = f0f16617e2f387c91580b4d50a652c4a46122533;
+				kind = exactVersion;
+				version = 0.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
