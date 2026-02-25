@@ -32,8 +32,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SEONOrchSDK",
-            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v0.1.0/SEONOrchSDK_SPM.zip",
-            checksum: "9f240835d649275b8dfd3c47b03df542efc1901f91d6afd383d0216e61ef866c"
+            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v0.1.1/SEONOrchSDK_SPM.zip",
+            checksum: "4aff1dc8acda76091716ce34a5919c3cdf2d7412c44d9c35b1744fdd96dd1df7"
         )
     ]
 )
