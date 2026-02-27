@@ -105,5 +105,9 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 
 # Changelog
 
+
+## 0.1.2
+-   Fixed an issue in publishing apps with the Orch SDK
+
 ## 0.1.0
 -   Initial Version
