@@ -106,6 +106,10 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 # Changelog
 
 
+
+## 0.1.5
+-   Fixed an issue in placement of privacy manifest
+
 ## 0.1.1
 -   Fixed an issue with the doc-check step
 
