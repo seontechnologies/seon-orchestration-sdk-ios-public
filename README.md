@@ -106,6 +106,9 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 # Changelog
 
 
+## 0.1.4
+-   Fixed an issue in placement of privacy manifest
+
 ## 0.1.3
 -   Fixed an issue in publishing apps with the Orch SDK
 
