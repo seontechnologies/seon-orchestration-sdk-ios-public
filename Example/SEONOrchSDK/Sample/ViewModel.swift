@@ -9,7 +9,33 @@
 import Foundation
 import SEONOrchSDK
 import UIKit
-import Resolver
+import SEONResolver
+
+/// Mirrors the region selector in the Flutter sample app
+/// (seon-orchestration-sdk-flutter-public/lib/main.dart `SeonRegion` + `kBaseUrls`).
+enum Region: Int, CaseIterable {
+    case eu
+    case us
+    case apac
+
+    var displayName: String {
+        switch self {
+        case .eu:   return "EU"
+        case .us:   return "US"
+        case .apac: return "APAC"
+        }
+    }
+
+    var baseUrl: String {
+        switch self {
+        case .eu:   return "https://api.seon.io/orchestration-api"
+        case .us:   return "https://api.us-east-1-main.seon.io/orchestration-api"
+        case .apac: return "https://api.ap-southeast-1-main.seon.io/orchestration-api"
+        }
+    }
+
+    static var `default`: Region { .eu }
+}
 
 class MainViewModel {
 
@@ -42,6 +68,7 @@ class MainViewModel {
     // swiftlint:disable:next function_parameter_count
     func initializeSDK(
         sessionToken: String?,
+        region: Region,
         language: String?,
         theme: String?,
         navigationController: UINavigationController,
@@ -56,6 +83,7 @@ class MainViewModel {
         // Initialize SDK with the provided session token
         initializeSDKWithToken(
             sessionToken,
+            region: region,
             language: language,
             theme: theme,
             navigationController: navigationController,
@@ -65,20 +93,20 @@ class MainViewModel {
 
     private func initializeSDKWithToken(
         _ token: String,
+        region: Region,
         language: String?,
         theme: String?,
         navigationController: UINavigationController,
         delegate: SEONOrchSDKServiceDelegate?
     ) {
-        // The SDK now handles token parsing, region fetching, and client-init internally
-        // you may specify your baseUrl based on the region:
+        // The SDK handles token parsing and client-init internally; we just have
+        // to give it the correct regional orchestration host.
         // Environment    URL
         // EU             https://api.seon.io/orchestration-api
         // US             https://api.us-east-1-main.seon.io/orchestration-api
         // APAC           https://api.ap-southeast-1-main.seon.io/orchestration-api
-        
         SEONOrchSDKService.shared.initialize(
-            baseUrl: "https://api.seon.io/orchestration-api",
+            baseUrl: region.baseUrl,
             token: token,
             language: language,
             theme: theme

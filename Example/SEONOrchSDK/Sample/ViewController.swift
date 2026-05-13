@@ -21,6 +21,15 @@ class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
     private let flowResultLabel = FillLabel()
     private let navigateButton = UIButton(type: .system)
 
+    // Region selector (mirrors the Flutter sample's region chips + base-URL hint)
+    private let regionSegmentedControl = UISegmentedControl(
+        items: Region.allCases.map { $0.displayName }
+    )
+    private let baseUrlHintLabel = FillLabel()
+    private var selectedRegion: Region {
+        Region(rawValue: regionSegmentedControl.selectedSegmentIndex) ?? .default
+    }
+
     // Container views for animation
     private let sessionTokenContainer = UIStackView()
 
@@ -30,6 +39,7 @@ class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
         view.backgroundColor = .gray
 
         setUpTitle()
+        setUpRegionSelector()
         setUpLanguageField()
         setUpThemeTextView()
         setUpSessionTokenContainer()
@@ -67,6 +77,40 @@ class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
 
     private func initializeThemeJSON() {
         themeTextView.text = viewModel.getDefaultThemeJSON()
+    }
+
+    private func setUpRegionSelector() {
+        let regionLabel = FillLabel()
+        regionLabel.text = "Environment:"
+        regionLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(regionLabel)
+
+        regionSegmentedControl.selectedSegmentIndex = Region.default.rawValue
+        regionSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        regionSegmentedControl.addTarget(
+            self,
+            action: #selector(regionSelectionChanged),
+            for: .valueChanged
+        )
+        contentView.addArrangedSubview(regionSegmentedControl)
+
+        baseUrlHintLabel.numberOfLines = 0
+        baseUrlHintLabel.font = UIFont.preferredFont(forTextStyle: .caption2)
+        baseUrlHintLabel.textColor = .darkGray
+        baseUrlHintLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addArrangedSubview(baseUrlHintLabel)
+        contentView.setCustomSpacing(18, after: baseUrlHintLabel)
+
+        updateBaseUrlHint()
+    }
+
+    @objc
+    private func regionSelectionChanged() {
+        updateBaseUrlHint()
+    }
+
+    private func updateBaseUrlHint() {
+        baseUrlHintLabel.text = selectedRegion.baseUrl
     }
 
     private func setUpLanguageField() {
@@ -180,6 +224,9 @@ class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
 
     private func applyPersistedSettings() {
 
+        regionSegmentedControl.selectedSegmentIndex = Region.default.rawValue
+        updateBaseUrlHint()
+
         languageTextField.text = "en"
         themeTextView.text = viewModel.getDefaultThemeJSON()
         sessionTokenTextField.text = "YOUR_SESSION_TOKEN"
@@ -212,6 +259,7 @@ class ViewController: KeyboardAwareVC, UINavigationControllerDelegate {
         // Use ViewModel to handle SDK initialization
         viewModel.initializeSDK(
             sessionToken: sessionTokenTextField.text,
+            region: selectedRegion,
             language: language,
             theme: themeToUse,
             navigationController: navController,
