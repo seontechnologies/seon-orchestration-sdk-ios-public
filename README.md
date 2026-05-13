@@ -106,6 +106,11 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 # Changelog
 
 
+
+## 1.0.0
+-   Added NFC Verification
+-   Minor Bugfixes and improvements
+
 ## 0.1.5
 -   Fixed an issue in placement of privacy manifest
 
