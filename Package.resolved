@@ -1,5 +1,4 @@
 {
-  "originHash" : "7ab87ddac5345f5d6291016f8a49f526e085b726b449b616d104938b86a7ba7c",
   "pins" : [
     {
       "identity" : "resolver",
@@ -18,16 +17,7 @@
         "revision" : "f6240372958bc94c05b1170eee790e878df51cea",
         "version" : "5.6.1"
       }
-    },
-    {
-      "identity" : "seon-orchestration-sdk-ios-public",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public",
-      "state" : {
-        "revision" : "792ab6f0dde80372cd23eb16673d2219b1cdb107",
-        "version" : "0.1.0"
-      }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
