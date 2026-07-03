@@ -107,6 +107,10 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 
 
 
+
+## 1.0.3
+-   Minor Bugfixes and improvements
+
 ## 1.0.2
 -   Minor Bugfixes and improvements
 
