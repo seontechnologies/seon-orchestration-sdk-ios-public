@@ -3,7 +3,7 @@ PODS:
     - RegulaCommon (= 9.1.1919)
   - DocumentReaderRFID (9.1.15618)
   - RegulaCommon (9.1.1919)
-  - SEONOrchSDK (1.0.1):
+  - SEONOrchSDK (1.0.3):
     - DocumentReader (~> 9.1.0)
     - DocumentReaderRFID (~> 9.1.0)
     - SEONResolver (~> 1.5.2)
@@ -12,7 +12,7 @@ PODS:
   - SeonSDK (5.6.1)
 
 DEPENDENCIES:
-  - SEONOrchSDK (= 1.0.1)
+  - SEONOrchSDK (= 1.0.3)
 
 SPEC REPOS:
   trunk:
@@ -27,10 +27,10 @@ SPEC CHECKSUMS:
   DocumentReader: 0596ecc002f480e3906a810d5474ddb3be6e9c03
   DocumentReaderRFID: d106de993c8325c81b6bd4c9e2875590e727c43e
   RegulaCommon: cd5a2a59d2b6bc2123ba0646a32dc60eed6f5f57
-  SEONOrchSDK: 5503bd13293cc35260028915e086e10666f4e5f3
+  SEONOrchSDK: 92f9f41a885c0fb166fed6800aeea3a1fad3294e
   SEONResolver: b5fdc4c6147d48435dba484eca85c0c7167ddf85
   SeonSDK: 5d64b986f8cb53f2a8cafc7e54d8e578bf1da46a
 
-PODFILE CHECKSUM: 6b9f14a143aa436349f7ad4859c6183770f8b1cc
+PODFILE CHECKSUM: 9a5fceb7ddd89cc3df040464fbe938691d554143
 
 COCOAPODS: 1.16.2
