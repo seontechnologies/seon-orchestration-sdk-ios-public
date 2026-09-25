@@ -21,7 +21,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
-            exact: "5.6.1"
+            exact: "5.7.1"
         ),
         .package(
             url: "https://github.com/regulaforensics/DocumentReader-Swift-Package",
