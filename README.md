@@ -11,7 +11,7 @@ SEON Orchestration iOS SDK is a framework designed to streamline the Fraud check
 SEONOrchSDK is available via Swift Package Manager and Cocoapods. For using Cocoapods, you can simply add it to your Podfile in the required target, like:
 
 ```ruby
-pod 'SEONOrchSDK', '~> 1.0.4'
+pod 'SEONOrchSDK', '~> 1.0.5'
 ```
 
 
@@ -107,6 +107,9 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 
 ## 1.0.4
 -   Updated Device Fingerprint SDK: iOS `SeonSDK` **5.7.1**
+
+## 1.0.5
+-   Updated Device Fingerprint SDK: iOS `SeonSDK` **5.8.2**, Android `androidsdk` **6.9.3**
 
 ## 1.0.3
 -   Minor Bugfixes and improvements
