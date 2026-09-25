@@ -21,7 +21,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
-            exact: "5.6.1"
+            exact: "5.7.1"
         ),
         .package(
             url: "https://github.com/regulaforensics/DocumentReader-Swift-Package",
@@ -45,8 +45,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SEONOrchSDK",
-            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v1.0.3/SEONOrchSDK_SPM.zip",
-            checksum: "f333f3ee02e09bc3ad34e80fe8f23be7eec38826b043a01aa266bae45a3c3398"
+            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v1.0.4/SEONOrchSDK_SPM.zip",
+            checksum: "737e7129d4ea4d0f3a781b38dcf19a5011fd8bf021f82fb318d02999c89597db"
         )
     ]
 )

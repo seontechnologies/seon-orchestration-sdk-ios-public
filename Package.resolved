@@ -1,12 +1,30 @@
 {
   "pins" : [
     {
-      "identity" : "resolver",
+      "identity" : "documentreader-swift-package",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hmlongco/Resolver",
+      "location" : "https://github.com/regulaforensics/DocumentReader-Swift-Package",
       "state" : {
-        "revision" : "47602af1ac8d7952299fbd0bda3cfbd12cf3a8ca",
-        "version" : "1.5.1"
+        "revision" : "c31d2ad8ba93067334448faec6822b35d7d5e053",
+        "version" : "9.1.5702"
+      }
+    },
+    {
+      "identity" : "documentreaderrfid-swift-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/regulaforensics/DocumentReaderRFID-Swift-Package",
+      "state" : {
+        "revision" : "b11a39c6678136acf3db54d970b07a85c964926b",
+        "version" : "9.1.15618"
+      }
+    },
+    {
+      "identity" : "regulacommon-swift-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/regulaforensics/RegulaCommon-Swift-Package.git",
+      "state" : {
+        "revision" : "59c0d6cf6260a839ec4718e135c95cad7be769a7",
+        "version" : "9.1.1844"
       }
     },
     {
@@ -14,8 +32,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
       "state" : {
-        "revision" : "f6240372958bc94c05b1170eee790e878df51cea",
-        "version" : "5.6.1"
+        "revision" : "6c0aa8ce12e845b64ccd642f54773a86a0927a15",
+        "version" : "5.7.1"
+      }
+    },
+    {
+      "identity" : "seonresolver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/abbassabetinezhad-seon/SEONResolver",
+      "state" : {
+        "revision" : "da57f482848254d0f207f44d9a52f916a319089c",
+        "version" : "1.5.2"
       }
     }
   ],
