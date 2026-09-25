@@ -147,7 +147,7 @@ jobs:
           if not m:
             raise SystemExit("README.md must contain a '# Changelog' heading")
           insert_at = m.end()
-          new_entry = f"\n## {version}\n{notes}\n\n"
+          new_entry = f"## {version}\n{notes}\n\n"
           t = t[:insert_at] + new_entry + t[insert_at:]
           readme.write_text(t)
           PY
