@@ -233,13 +233,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -254,13 +250,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SEONOrchSDKSample/Pods-SEONOrchSDKSample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -321,9 +313,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "This app uses NFC to read the chip on your identity document for verification purposes.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs access to the camera to record videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to verify if it's match with your identity and requested service";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App needs access to the microphone to record videos";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.\n";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -356,9 +350,11 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "This app uses NFC to read the chip on your identity document for verification purposes.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs access to the camera to record videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to verify if it's match with your identity and requested service";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App needs access to the microphone to record videos";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.\n";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -386,15 +382,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "This app uses NFC to read the chip on your identity document for verification purposes.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs access to the camera to record videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to verify if it's match with your identity and requested service";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App needs access to the microphone to record videos";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.\n";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -405,8 +404,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.seon.SEONOrchSDK-Sample-UIKit";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.seon.SEONIdVerification-PublicApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -422,15 +421,18 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sample/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "This app uses NFC to read the chip on your identity document for verification purposes.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs access to the camera to record videos";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need to access your location to verify if it's match with your identity and requested service";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "App needs access to the microphone to record videos";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.\n";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to save images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -441,8 +443,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.seon.SEONOrchSDK-Sample-UIKit";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "io.seon.SEONIdVerification-PublicApp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
