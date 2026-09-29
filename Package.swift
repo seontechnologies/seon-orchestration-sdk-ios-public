@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SEONOrchSDK",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -21,7 +21,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
-            exact: "5.7.1"
+            exact: "5.8.2"
         ),
         .package(
             url: "https://github.com/regulaforensics/DocumentReader-Swift-Package",
@@ -45,8 +45,8 @@ let package = Package(
         ),
         .binaryTarget(
             name: "SEONOrchSDK",
-            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v1.0.4/SEONOrchSDK_SPM.zip",
-            checksum: "737e7129d4ea4d0f3a781b38dcf19a5011fd8bf021f82fb318d02999c89597db"
+            url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public/releases/download/v1.0.5/SEONOrchSDK_SPM.zip",
+            checksum: "691ed7871feb9002876ecfd591c698225e13f2d9684503f8b7165252ba30d6c3"
         )
     ]
 )
