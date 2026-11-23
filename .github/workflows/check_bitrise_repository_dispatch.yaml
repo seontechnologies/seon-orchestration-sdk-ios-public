@@ -13,12 +13,16 @@ on:
         required: true
         type: string
       override:
-        description: "Redo a same-version release that failed part-way (deletes the v<version> release/tag/docs branch created in the last 24h)"
+        description: "Redo a same-version release that failed part-way (an existing release or tag must be less than 24h old)"
         required: false
         default: false
         type: boolean
       release_notes:
-        description: "Optional markdown release notes; otherwise fetched from the public CDN"
+        description: "Markdown release notes (single line in the UI; for multi-line use release_notes_b64)"
+        required: false
+        type: string
+      release_notes_b64:
+        description: "Base64-encoded markdown release notes (use for multi-line notes)"
         required: false
         type: string
 
@@ -46,6 +50,7 @@ jobs:
       INPUT_VERSION: ${{ inputs.version }}
       INPUT_OVERRIDE: ${{ inputs.override }}
       INPUT_RELEASE_NOTES: ${{ inputs.release_notes }}
+      INPUT_RELEASE_NOTES_B64: ${{ inputs.release_notes_b64 }}
 
     steps:
       - name: Checkout workflow ref
@@ -63,7 +68,8 @@ jobs:
               exit 1
             fi
             version="$INPUT_VERSION"
-            if [[ "${INPUT_OVERRIDE,,}" != "true" && "${INPUT_OVERRIDE,,}" != "false" ]]; then
+            override="$INPUT_OVERRIDE"
+            if [[ "$override" != "true" && "$override" != "false" ]]; then
               echo "override must be true or false." >&2
               exit 1
             fi
@@ -106,19 +112,23 @@ jobs:
             printf 'ARTIFACTS_JSON=%s\n' "$artifacts_json"
           } >> "$GITHUB_ENV"
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
-            printf 'OVERRIDE=%s\n' "${INPUT_OVERRIDE,,}" >> "$GITHUB_ENV"
+            printf 'OVERRIDE=%s\n' "$override" >> "$GITHUB_ENV"
           else
             printf 'OVERRIDE=false\n' >> "$GITHUB_ENV"
           fi
 
+          release_notes=""
           if [[ "$EVENT_NAME" == "repository_dispatch" && -n "${DISPATCH_RELEASE_NOTES_B64:-}" ]]; then
             release_notes=$(python3 -c 'import base64,sys; sys.stdout.write(base64.b64decode(sys.argv[1]).decode("utf-8"))' "$DISPATCH_RELEASE_NOTES_B64")
           elif [[ "$EVENT_NAME" == "repository_dispatch" && -n "${DISPATCH_RELEASE_NOTES:-}" ]]; then
             release_notes="$DISPATCH_RELEASE_NOTES"
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" && -n "${INPUT_RELEASE_NOTES_B64:-}" ]]; then
+            release_notes=$(python3 -c 'import base64,sys; sys.stdout.write(base64.b64decode(sys.argv[1]).decode("utf-8"))' "$INPUT_RELEASE_NOTES_B64")
           elif [[ "$EVENT_NAME" == "workflow_dispatch" && -n "${INPUT_RELEASE_NOTES:-}" ]]; then
             release_notes="$INPUT_RELEASE_NOTES"
-          else
-            release_notes=$(curl -fsSL "https://orch.seondev.space/native/sdk-releases/bundled-sdk/ios/${version}/release_notes.md")
+          elif [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            printf '%s\n' "One of release_notes / release_notes_b64 is required. Example: gh workflow run check_bitrise_repository_dispatch.yaml --ref master -f version=X.Y.Z -f override=false -f release_notes_b64=\"\$(base64 < notes.md | tr -d '\\n')\"" >&2
+            exit 1
           fi
           if [[ -z "$release_notes" ]] || ! grep -q '[^[:space:]]' <<< "$release_notes"; then
             echo "Release notes are empty." >&2
@@ -175,6 +185,27 @@ jobs:
             elif ! grep -q 'HTTP 404' "$release_err"; then
               cat "$release_err" >&2
               exit 1
+            else
+              tag_err=$(mktemp)
+              set +e
+              git ls-remote --exit-code --tags origin "refs/tags/${tag}" >/dev/null 2>"$tag_err"
+              tag_status=$?
+              set -e
+              if (( tag_status == 0 )); then
+                rm -f "$tag_err"
+                git fetch --no-tags origin "refs/tags/${tag}:refs/tags/${tag}"
+                tag_created=$(git for-each-ref --format='%(if)%(taggerdate)%(then)%(taggerdate:unix)%(else)%(committerdate:unix)%(end)' "refs/tags/${tag}")
+                now=$(date +%s)
+                if (( now - tag_created > 86400 )); then
+                  echo "Tag ${tag} is older than 24 hours; refusing override." >&2
+                  exit 1
+                fi
+              elif (( tag_status != 2 )); then
+                cat "$tag_err" >&2
+                rm -f "$tag_err"
+                exit 1
+              fi
+              rm -f "$tag_err"
             fi
             rm -f "$release_err"
 
@@ -265,7 +296,7 @@ jobs:
             {
               echo "## Guarded override for v${VERSION}"
               echo "- CocoaPods does not list this version."
-              echo "- Existing release is absent or was created within the last 24 hours."
+              echo "- Existing release or tag is absent or was created within the last 24 hours."
               echo "- No merged documentation/${VERSION} PR into master exists."
               echo "- Cleanup completed idempotently for the open PR, release, tag, and docs branch."
             } >> "$GITHUB_STEP_SUMMARY"
