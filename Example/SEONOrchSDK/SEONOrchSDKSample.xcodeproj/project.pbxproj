@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B05733B32F1E37ED009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B22F1E37ED009EBA61 /* SEONOrchSDK */; };
-		B05733B62F1E392F009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B52F1E392F009EBA61 /* SEONOrchSDK */; };
-		B05733B92F1E3970009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B82F1E3970009EBA61 /* SEONOrchSDK */; };
 		B05733BC2F1E3A3C009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733BB2F1E3A3C009EBA61 /* SEONOrchSDK */; };
 		B05733C22F1E3BA4009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733C12F1E3BA4009EBA61 /* SEONOrchSDK */; };
 		B0BDD21B2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0BDD21A2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist */; };
@@ -64,10 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05733B62F1E392F009EBA61 /* SEONOrchSDK in Frameworks */,
-				B05733B92F1E3970009EBA61 /* SEONOrchSDK in Frameworks */,
 				B05733BC2F1E3A3C009EBA61 /* SEONOrchSDK in Frameworks */,
-				B05733B32F1E37ED009EBA61 /* SEONOrchSDK in Frameworks */,
 				B05733C22F1E3BA4009EBA61 /* SEONOrchSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,36 +599,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B05733B12F1E37ED009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				branch = documentation/v0.1.0;
-				kind = branch;
-			};
-		};
-		B05733B42F1E392F009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				branch = documentation/v0.1.0;
-				kind = branch;
-			};
-		};
-		B05733B72F1E3970009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				kind = revision;
-				revision = cd4891b095aeacd97dbf135336e95c9eef87d46f;
-			};
-		};
 		B05733BA2F1E3A3C009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
 			requirement = {
-				kind = revision;
-				revision = b26ff69a0f1b5d1e8855b39f49d9564232d7604b;
+				kind = exactVersion;
+				version = 1.0.6;
 			};
 		};
 		B05733C02F1E3BA4009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
@@ -642,7 +612,7 @@
 			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
