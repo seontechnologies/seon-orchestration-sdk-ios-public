@@ -7,11 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B05733B32F1E37ED009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B22F1E37ED009EBA61 /* SEONOrchSDK */; };
-		B05733B62F1E392F009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B52F1E392F009EBA61 /* SEONOrchSDK */; };
-		B05733B92F1E3970009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733B82F1E3970009EBA61 /* SEONOrchSDK */; };
 		B05733BC2F1E3A3C009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733BB2F1E3A3C009EBA61 /* SEONOrchSDK */; };
-		B05733C22F1E3BA4009EBA61 /* SEONOrchSDK in Frameworks */ = {isa = PBXBuildFile; productRef = B05733C12F1E3BA4009EBA61 /* SEONOrchSDK */; };
 		B0BDD21B2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0BDD21A2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist */; };
 		B0BDD21C2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0BDD21A2EC4CBF500ECB445 /* SEONOrchSDKSample-Info.plist */; };
 		DE2EE231F1603AC892EFA9B9 /* Pods_SEONOrchSDKSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7C76ACBCF48F58BD685232 /* Pods_SEONOrchSDKSample.framework */; };
@@ -64,11 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05733B62F1E392F009EBA61 /* SEONOrchSDK in Frameworks */,
-				B05733B92F1E3970009EBA61 /* SEONOrchSDK in Frameworks */,
 				B05733BC2F1E3A3C009EBA61 /* SEONOrchSDK in Frameworks */,
-				B05733B32F1E37ED009EBA61 /* SEONOrchSDK in Frameworks */,
-				B05733C22F1E3BA4009EBA61 /* SEONOrchSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +186,9 @@
 			);
 			mainGroup = B098601C2D9D17F800D39D9D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B05733BA2F1E3A3C009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B09860262D9D17F800D39D9D /* Products */;
 			projectDirPath = "";
@@ -323,7 +318,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -360,7 +355,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -399,7 +394,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -438,7 +433,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,7 +500,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -562,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -605,47 +600,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B05733B12F1E37ED009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				branch = documentation/v0.1.0;
-				kind = branch;
-			};
-		};
-		B05733B42F1E392F009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				branch = documentation/v0.1.0;
-				kind = branch;
-			};
-		};
-		B05733B72F1E3970009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
-				kind = revision;
-				revision = cd4891b095aeacd97dbf135336e95c9eef87d46f;
-			};
-		};
 		B05733BA2F1E3A3C009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
 			requirement = {
-				kind = revision;
-				revision = b26ff69a0f1b5d1e8855b39f49d9564232d7604b;
-			};
-		};
-		B05733C02F1E3BA4009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public";
-			requirement = {
 				kind = exactVersion;
-				version = 1.0.0;
+				version = 1.0.6;
 			};
 		};
-/* End XCRemoteSwiftPackageReference section */
+		/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		B05733B22F1E37ED009EBA61 /* SEONOrchSDK */ = {
@@ -666,11 +629,6 @@
 		B05733BB2F1E3A3C009EBA61 /* SEONOrchSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B05733BA2F1E3A3C009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */;
-			productName = SEONOrchSDK;
-		};
-		B05733C12F1E3BA4009EBA61 /* SEONOrchSDK */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B05733C02F1E3BA4009EBA61 /* XCRemoteSwiftPackageReference "seon-orchestration-sdk-ios-public" */;
 			productName = SEONOrchSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

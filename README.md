@@ -11,7 +11,7 @@ SEON Orchestration iOS SDK is a framework designed to streamline the Fraud check
 SEONOrchSDK is available via Swift Package Manager and Cocoapods. For using Cocoapods, you can simply add it to your Podfile in the required target, like:
 
 ```ruby
-pod 'SEONOrchSDK', '~> 1.0.5'
+pod 'SEONOrchSDK', '~> 1.0.6'
 ```
 
 
@@ -32,7 +32,7 @@ https://github.com/seontechnologies/seon-orchestration-sdk-ios-public
 
 ```
 dependencies: [
-    .package(url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public", from: "1.0.4")
+    .package(url: "https://github.com/seontechnologies/seon-orchestration-sdk-ios-public", from: "1.0.6")
 ],
 targets: [
     .target(
@@ -104,6 +104,11 @@ NSPhotoLibraryUsageDescription // If you have Proof of Address Checks in your Ve
 - For security reasons, the SDK may not work on simulator as expected. Please use real devices.
 
 # Changelog
+
+## 1.0.6
+-   The theme passed to `initialize(theme:)` is now applied to the native loading screens from the first frame: the start loader, the WebView cover and the result loader use the themed accent colour. Colours set with the `SEONTheme` setters are kept unless the theme overrides them.
+-   The theme colours are also passed to the WebView, so the hand-off from the native loader to the web flow has no unstyled frame.
+-   Partial themes are now accepted; previously any missing field caused the whole theme to be ignored.
 
 ## 1.0.5
 -   Updated Device Fingerprint SDK: iOS `SeonSDK` **5.8.2**, Android `androidsdk` **6.9.3**
